@@ -3,26 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Comparison</title>
+    <title>Home - Car Comparison</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        form {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 45%;
+        }
+        .form-group label {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        .form-group select {
+            width: 100%;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        table {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        .error {
+            color: red;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            // Function to dynamically generate make and model selection fields
+            function generateFormFields(numCars) {
+                let formHtml = '';
+                for (let i = 1; i <= numCars; i++) {
+                    formHtml += `
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="make${i}">Make ${i}:</label>
+                                <select id="make${i}" name="make${i}" required>
+                                    <option value="">Select Make</option>
+                                    {% for make in makes %}
+                                        <option value="{{ make }}">{{ make }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="model${i}">Model ${i}:</label>
+                                <select id="model${i}" name="model${i}" required>
+                                    <option value="">Select Model</option>
+                                </select>
+                            </div>
+                        </div>
+                    `;
+                }
+                $('#car-selection-container').html(formHtml);
+
+                // Attach event handlers for dynamic model loading
+                for (let i = 1; i <= numCars; i++) {
+                    $(`#make${i}`).on('change', function() {
+                        var make = $(this).val();
+                        $.post('/get_models', { make: make }, function(data) {
+                            $(`#model${i}`).empty().append('<option value="">Select Model</option>');
+                            $.each(data.models, function(index, value) {
+                                $(`#model${i}`).append('<option value="' + value + '">' + value + '</option>');
+                            });
+                        });
+                    });
+                }
+            }
+
+            // Initial load for 2 cars
+            generateFormFields(2);
+
+            // Update form fields based on the selected number of cars
+            $('#num_cars').on('change', function() {
+                const numCars = $(this).val();
+                generateFormFields(numCars);
+            });
+        });
+    </script>
 </head>
 <body>
-    <h1>Car Comparison</h1>
-    <form action="/compare" method="post">
-        <label for="car1">Car 1:</label>
-        <select id="car1" name="car1">
-            {% for model in models %}
-                <option value="{{ model }}">{{ model }}</option>
-            {% endfor %}
-        </select>
-        <label for="car2">Car 2:</label>
-        <select id="car2" name="car2">
-            {% for model in models %}
-                <option value="{{ model }}">{{ model }}</option>
-            {% endfor %}
-        </select>
+    <h1>Compare Car Specs</h1>
+    
+    <form method="POST">
+        <div class="form-group">
+            <label for="num_cars">Number of Cars to Compare:</label>
+            <select id="num_cars" name="num_cars" required>
+                <option value="2" selected>2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+
+        <div id="car-selection-container">
+            <!-- Dynamic form fields will be generated here -->
+        </div>
+        
         <button type="submit">Compare</button>
     </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if comparison_results %}
+        <h2>Comparison Results:</h2>
+        <table>
+            <tr>
+                <th>Attribute</th>
+                {% for car in comparison_results %}
+                    <th>{{ car['Model'] }}</th>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Make</td>
+                {% for car in comparison_results %}
+                    <td>{{ car['Make'] }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Combined Mpg For Fuel Type1</td>
+                {% for car in comparison_results %}
+                    <td>{{ car['Combined Mpg For Fuel Type1'] }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Cylinders</td>
+                {% for car in comparison_results %}
+                    <td>{{ car['Cylinders'] }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Engine displacement</td>
+                {% for car in comparison_results %}
+                    <td>{{ car['Engine displacement'] }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Drive</td>
+                {% for car in comparison_results %}
+                    <td>{{ car['Drive'] }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Fuel Type1</td>
+                {% for car in comparison_results %}
+                    <td>{{ car['Fuel Type1'] }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Annual Fuel Cost For Fuel Type1</td>
+                {% for car in comparison_results %}
+                    <td>{{ car['Annual Fuel Cost For Fuel Type1'] }}</td>
+                {% endfor %}
+            </tr>
+        </table>
+    {% endif %}
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
