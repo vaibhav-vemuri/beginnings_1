@@ -4,101 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comparison Results</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        h1 {
-            text-align: center;
-        }
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            text-decoration: none;
-            font-size: 18px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styling.css') }}"> <!-- Link to the external CSS file -->
 </head>
 <body>
     <h1>Car Comparison</h1>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Attribute</th>
-                {% for car in comparison_results %}
-                    <th>{{ car['Make'] }} {{ car['Model'] }}</th>
-                {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Combined Mpg For Fuel Type1</td>
-                {% for car in comparison_results %}
-                    <td>{{ car.get('Combined Mpg For Fuel Type1', '') }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <td>Cylinders</td>
-                {% for car in comparison_results %}
-                    <td>{{ car.get('Cylinders', '') }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <td>Engine Displacement</td>
-                {% for car in comparison_results %}
-                    <td>{{ car.get('Engine displacement', '') }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <td>Drive</td>
-                {% for car in comparison_results %}
-                    <td>{{ car.get('Drive', '') }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <td>Fuel Type1</td>
-                {% for car in comparison_results %}
-                    <td>{{ car.get('Fuel Type1', '') }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <td>Annual Fuel Cost For Fuel Type1</td>
-                {% for car in comparison_results %}
-                    <td>{{ car.get('Annual Fuel Cost For Fuel Type1', '') }}</td>
-                {% endfor %}
-            </tr>
-        </tbody>
-    </table>
+    <div class="comparison-results">
+        {% for car in comparison_results %}
+            <div class="car-card">
+                <h2>{{ car['Make'] }} {{ car['Model'] }}</h2>
+                <p class="attribute">Combined Mpg For Fuel Type1:</p>
+                <p>{{ car.get('Combined Mpg For Fuel Type1', '') }}</p>
+                <p class="attribute">Cylinders:</p>
+                <p>{{ car.get('Cylinders', '') }}</p>
+                <p class="attribute">Engine Displacement:</p>
+                <p>{{ car.get('Engine displacement', '') }}</p>
+                <p class="attribute">Drive:</p>
+                <p>{{ car.get('Drive', '') }}</p>
+                <p class="attribute">Fuel Type1:</p>
+                <p>{{ car.get('Fuel Type1', '') }}</p>
+                <p class="attribute">Annual Fuel Cost For Fuel Type1:</p>
+                <p>{{ car.get('Annual Fuel Cost For Fuel Type1', '') }}</p>
+            </div>
+        {% endfor %}
+    </div>
 
     <a href="/">Go Back</a>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

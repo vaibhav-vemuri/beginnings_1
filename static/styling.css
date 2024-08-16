@@ -1,0 +1,122 @@
+body {
+  font-family: Arial, sans-serif;
+  background-image: url('/static/images/pexels-vraj-shah-115200-638479.jpg');
+  background-size: cover; /* Ensures the image covers the entire background */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-attachment: fixed; /* Keeps the image fixed in place when scrolling */
+  color: #2C2C2C; /* Dark Gray */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin: 0; /* Removes default margin */
+  padding: 0; /* Removes default padding */
+}
+
+h1 {
+  color: #2C2C2C; /* Dark Gray */
+}
+
+form {
+  width: 50%;
+  background-color: #F3F4F6; /* Lighter shade for form background */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 45%;
+}
+
+.form-group label {
+  text-align: center;
+  margin-bottom: 5px;
+  color: #2C2C2C; /* Dark Gray */
+}
+
+.form-group select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #6E6E6E; /* Medium Gray */
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  font-size: 16px;
+  background-color: #4A90E2; /* Muted Blue */
+  color: #FFFFFF; /* White */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #357ABD; /* Darker shade of blue for hover */
+}
+
+.error {
+  color: #E74C3C; /* Soft Red */
+  margin-top: 20px;
+}
+
+.comparison-results {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.car-card {
+  background-color: #FFFFFF; /* White */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin: 10px;
+  padding: 20px;
+  width: 300px; /* Adjust as needed */
+  text-align: center;
+}
+
+.car-card h2 {
+  font-size: 18px;
+  color: #2C2C2C; /* Dark Gray */
+  margin-bottom: 10px;
+}
+
+.car-card p {
+  font-size: 16px;
+  color: #2C2C2C; /* Dark Gray */
+  margin: 5px 0;
+}
+
+.car-card p.attribute {
+  font-weight: bold;
+}
+
+.car-card p.value {
+  margin-top: 5px;
+}
+
+              
+

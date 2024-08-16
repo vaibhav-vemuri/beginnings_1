@@ -5,60 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Car Comparison</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        form {
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .form-row {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 45%;
-        }
-        .form-group label {
-            text-align: center;
-            margin-bottom: 5px;
-        }
-        .form-group select {
-            width: 100%;
-        }
-        button {
-            padding: 10px 20px;
-            margin-top: 20px;
-            font-size: 16px;
-        }
-        table {
-            margin-top: 20px;
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-        .error {
-            color: red;
-            margin-top: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styling.css') }}"> <!-- Link to the external CSS file -->
     <script>
         $(document).ready(function() {
             // Function to dynamically generate make and model selection fields
@@ -137,78 +84,25 @@
     {% endif %}
 
     {% if comparison_results %}
-        <h2>Comparison Results:</h2>
-        <table>
-            <tr>
-                <th>Attribute</th>
-                {% for car in comparison_results %}
-                    <th>{{ car['Model'] }}</th>
-                {% endfor %}
-            </tr>
-            <tr>
-                <td>Make</td>
-                {% for car in comparison_results %}
-                    <td>{{ car['Make'] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <td>Combined Mpg For Fuel Type1</td>
-                {% for car in comparison_results %}
-                    <td>{{ car['Combined Mpg For Fuel Type1'] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <td>Cylinders</td>
-                {% for car in comparison_results %}
-                    <td>{{ car['Cylinders'] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <td>Engine displacement</td>
-                {% for car in comparison_results %}
-                    <td>{{ car['Engine displacement'] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <td>Drive</td>
-                {% for car in comparison_results %}
-                    <td>{{ car['Drive'] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <td>Fuel Type1</td>
-                {% for car in comparison_results %}
-                    <td>{{ car['Fuel Type1'] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <td>Annual Fuel Cost For Fuel Type1</td>
-                {% for car in comparison_results %}
-                    <td>{{ car['Annual Fuel Cost For Fuel Type1'] }}</td>
-                {% endfor %}
-            </tr>
-        </table>
+        <div class="comparison-results">
+            {% for car in comparison_results %}
+                <div class="car-card">
+                    <h2>{{ car['Make'] }} {{ car['Model'] }}</h2>
+                    <p class="attribute">Combined Mpg For Fuel Type1:</p>
+                    <p class="value">{{ car['Combined Mpg For Fuel Type1'] }}</p>
+                    <p class="attribute">Cylinders:</p>
+                    <p class="value">{{ car['Cylinders'] }}</p>
+                    <p class="attribute">Engine Displacement:</p>
+                    <p class="value">{{ car['Engine displacement'] }}</p>
+                    <p class="attribute">Drive:</p>
+                    <p class="value">{{ car['Drive'] }}</p>
+                    <p class="attribute">Fuel Type1:</p>
+                    <p class="value">{{ car['Fuel Type1'] }}</p>
+                    <p class="attribute">Annual Fuel Cost For Fuel Type1:</p>
+                    <p class="value">{{ car['Annual Fuel Cost For Fuel Type1'] }}</p>
+                </div>
+            {% endfor %}
+        </div>
     {% endif %}
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
